@@ -1,0 +1,358 @@
+<!-- 声明文档类型为HTML5 -->
+<!DOCTYPE html>
+<!-- 设置网页语言为中文 -->
+<html lang="zh-CN">
+<head>
+    <!-- 设置字符编码为UTF-8，支持中文显示 -->
+    <meta charset="UTF-8">
+    <!-- 设置移动设备的视口，确保在手机上正常显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <!-- 网页标题 -->
+    <title>艾克斯生活馆 - 达人货盘表</title>
+    <!-- CSS样式开始 -->
+    <style>
+        /* 重置所有元素的默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 设置网页整体样式 */
+        body {
+            /* 设置字体，使用系统默认字体，确保在不同设备上都能正常显示 */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            /* 设置行高为1.6倍，提高文字可读性 */
+            line-height: 1.6;
+            /* 设置文字颜色为深灰色 */
+            color: #333;
+            /* 设置背景色为浅灰色 */
+            background-color: #f5f5f5;
+        }
+
+        /* 内容容器样式，用于限制页面最大宽度并居中显示 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 页面头部样式 */
+        .header {
+            /* 设置背景色为绿色 */
+            background-color: #4CAF50;
+            /* 文字颜色为白色 */
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            /* 文字居中对齐 */
+            text-align: center;
+        }
+
+        /* 头部标题样式 */
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        /* 联系信息样式 */
+        .contact-info {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-item i {
+            font-size: 18px;
+        }
+
+        /* 公告栏样式 */
+        .notice {
+            /* 设置浅黄色背景，用于突出显示重要信息 */
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            margin-bottom: 20px;
+            /* 设置圆角边框 */
+            border-radius: 5px;
+        }
+
+        /* 商品网格布局 */
+        .product-grid {
+            /* 使用网格布局，自动适应屏幕宽度 */
+            display: grid;
+            /* 设置网格列宽，每列最小300px，自动填充 */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            /* 设置网格间距 */
+            gap: 20px;
+        }
+
+        /* 商品卡片样式 */
+        .product-card {
+            /* 白色背景 */
+            background: white;
+            /* 圆角边框 */
+            border-radius: 8px;
+            /* 隐藏溢出内容 */
+            overflow: hidden;
+            /* 添加阴影效果 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            /* 添加悬停动画效果 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 商品卡片悬停效果 */
+        .product-card:hover {
+            /* 向上移动5像素，创造悬浮感 */
+            transform: translateY(-5px);
+        }
+
+        /* 商品图片样式 */
+        .product-image {
+            /* 图片宽度100%适应容器 */
+            width: 100%;
+            /* 使用padding-bottom: 100%创建1:1的宽高比容器 */
+            padding-bottom: 100%;
+            /* 相对定位，用于内部图片定位 */
+            position: relative;
+        }
+        .product-image img {
+            /* 绝对定位，填充整个容器 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 图片自适应裁剪，保持比例 */
+            object-fit: cover;
+        }
+
+        /* 商品信息容器 */
+        .product-info {
+            padding: 15px;
+        }
+
+        /* 商品标题样式 */
+        .product-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            /* 固定标题高度，显示两行 */
+            height: 48px;
+            overflow: hidden;
+            /* 使用webkit的文本截断属性，显示两行文字，超出部分隐藏并显示省略号 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* 商品价格样式 */
+        .product-price {
+            /* 价格显示为红色 */
+            color: #e53935;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* 佣金比例样式 */
+        .product-commission {
+            /* 佣金显示为绿色 */
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* 商品链接样式 */
+        .product-link {
+            /* 链接显示为蓝色 */
+            color: #2196F3;
+            /* 去除下划线 */
+            text-decoration: none;
+            /* 允许长链接自动换行 */
+            word-break: break-all;
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .product-link:hover {
+            background-color: #e3f2fd;
+        }
+        .copy-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 12px;
+            background-color: #333;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .product-link.copied .copy-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 链接悬停效果 */
+        .product-link:hover {
+            /* 鼠标悬停时显示下划线 */
+            text-decoration: underline;
+        }
+
+        /* 响应式布局：当屏幕宽度小于768px时应用以下样式 */
+        @media (max-width: 768px) {
+            /* 减小容器内边距 */
+            .container {
+                padding: 10px;
+            }
+
+            /* 调整商品网格布局，减小商品卡片最小宽度和间距 */
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>艾克斯生活馆(运动户外类目) - 微信小店达人货盘表</h1>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <span>联系人：辛先生</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-weixin"></i>
+                    <span>微信：919199678</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>电话：17603514134</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="notice">
+            下方所有品为起步售价和佣金，量大可谈<span style="color: #e53935;">定向高佣</span>，可谈<span style="color: #e53935;">专属推广</span>。
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://wst.wxapp.tc.qq.com/161/20304/snscosdownload/SH/reserved/68240f9b000aa77f1dbc345de8ca1715000000a100004f50" alt="裸感户外运动外套">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">裸感户外运动外套女紧身透立步瑜伽健身服外套</div>
+                    <div class="product-price">¥79.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230508626')">达人链接：weixinstore/10000230508626<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://wst.wxapp.tc.qq.com/161/20304/snscosdownload/SH/reserved/68240d88000a2e9c13eafaf65b65b01e000000a100004f50" alt="新款立领裸感瑜伽外套">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">新款立领裸感瑜伽外套速干显瘦透气跑步运动健身瑜伽外套</div>
+                    <div class="product-price">¥79.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230391804')">达人链接：weixinstore/10000230391804<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://wst.wxapp.tc.qq.com/161/20304/snscosdownload/SH/reserved/682411ae000865fc134d4451b1f61715000000a100004f50" alt="瑜伽裤">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">瑜伽裤女健身裤蜜桃臀高腰提臀紧身裤欧美跨境跑步运动紧身裤女夏</div>
+                    <div class="product-price">¥54.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230431803')">达人链接：weixinstore/10000230431803<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://wst.wxapp.tc.qq.com/161/20304/snscosdownload/SH/reserved/682411ae000865fc134d4451b1f61715000000a100004f50" alt="瑜伽裤">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">瑜伽裤女健身裤蜜桃臀高腰提臀紧身裤欧美跨境跑步运动紧身裤女夏</div>
+                    <div class="product-price">¥54.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230431803')">达人链接：weixinstore/10000230431803<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://example.com/placeholder.jpg" alt="瑜伽裤">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">瑜伽裤女健身裤蜜桃臀高腰提臀紧身裤欧美跨境跑步运动紧身裤女夏</div>
+                    <div class="product-price">¥54.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230431803')">达人链接：weixinstore/10000230431803<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://example.com/placeholder.jpg" alt="瑜伽裤">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">瑜伽裤女健身裤蜜桃臀高腰提臀紧身裤欧美跨境跑步运动紧身裤女夏</div>
+                    <div class="product-price">¥54.9</div>
+                    <div class="product-commission">佣金比例：35%</div>
+                    <div class="product-link" onclick="copyToClipboard(this, 'weixinstore/10000230431803')">达人链接：weixinstore/10000230431803<span class="copy-tooltip">已复制!</span></div>
+                </div>
+            </div>
+            
+            <!-- 继续添加其他商品卡片 -->
+            <!-- 其他商品的HTML结构与上面的相同 -->
+
+        </div>
+    </div>
+    <script>
+        function copyToClipboard(element, text) {
+            // 创建临时文本区域
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            
+            // 选择并复制文本
+            textarea.select();
+            document.execCommand('copy');
+            
+            // 移除临时文本区域
+            document.body.removeChild(textarea);
+            
+            // 显示复制成功提示
+            element.classList.add('copied');
+            
+            // 2秒后移除提示
+            setTimeout(() => {
+                element.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
